@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model model {
+  name             String  @id
+  img_link         String?
+  page_link        String
+  year_start       Int
+  year_end         Int
+  manufacturer_name String?
+
+  manufacturer manufacturer? @relation(fields: [manufacturer_name], references: [name])
+  parts        part[]
+}
+
+model manufacturer {
+  name      String  @id
+  page_link String
+  logo_link String?
+
+  models model[]
+}
+
+model part_catalogue {
+  name  String  @id
+
+  parts part[]
+}
+
+model part {
+  id            Int     @id @default(autoincrement())
+  name          String
+  model_name    String
+  page_link     String
+  catalogue_name String
+
+  model        model          @relation(fields: [model_name], references: [name])
+  catalogue    part_catalogue @relation(fields: [catalogue_name], references: [name])
+  products     product[]
+
+  @@index([model_name], name: "idx_model_name")
+  @@index([catalogue_name], name: "idx_catalogue_name")
+}
+
+model product_manufacturer {
+  name     String  @id
+
+  products product[]
+}
+
+model product {
+  id                Int     @id @default(autoincrement())
+  code              String
+  price             Decimal
+  part_id           Int
+  manufacturer_name String
+  description       String
+  city              String
+
+  part         part                  @relation(fields: [part_id], references: [id])
+  manufacturer product_manufacturer @relation(fields: [manufacturer_name], references: [name])
+
+  @@index([part_id], name: "idx_part_id")
+}

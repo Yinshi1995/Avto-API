@@ -1,0 +1,28 @@
+type Part_catalogue {
+  name: String!
+  part: Part
+  parts: [Part!]
+}
+
+input NewPartCatalogue {
+  name: String!
+}
+
+input UpdatePartCatalogue {
+  name: String!
+}
+
+type Query {
+  partCatalogues: [Part_catalogue!]!
+  partCatalogue(name: String!): Part_catalogue
+}
+
+type Mutation {
+  createPartCatalogue(input: NewPartCatalogue!): Part_catalogue!
+  updatePartCatalogue(input: UpdatePartCatalogue!): Part_catalogue
+  deletePartCatalogue(name: String!): Part_catalogue
+}
+
+type Subscription {
+  partCatalogueCreated: Part_catalogue
+}

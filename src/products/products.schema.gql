@@ -1,0 +1,47 @@
+# src/products/schema.gql
+
+scalar Decimal
+
+type Product {
+  id: Int!
+  code: String!
+  price: Decimal!
+  part_id: Int!
+  manufacturer_name: String
+  description: String!
+  city: String!
+}
+
+input NewProduct {
+  code: String!
+  price: Decimal!
+  part_id: Int!
+  manufacturer_name: String!
+  description: String!
+  city: String!
+}
+
+input UpdateProduct {
+  id: Int!
+  code: String
+  price: Decimal
+  part_id: Int
+  manufacturer_name: String
+  description: String
+  city: String
+}
+
+type Query {
+  products: [Product!]!
+  product(id: Int!): Product
+}
+
+type Mutation {
+  createProduct(input: NewProduct!): Product!
+  updateProduct(input: UpdateProduct!): Product
+  deleteProduct(id: Int!): Product
+}
+
+type Subscription {
+  productCreated: Product
+}

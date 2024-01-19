@@ -1,0 +1,32 @@
+type Manufacturer {
+  name: String!
+  page_link: String
+  logo_link: String
+}
+
+input NewManufacturer {
+  name: String!
+  page_link: String!
+  logo_link: String!
+}
+
+input UpdateManufacturer {
+  name: String!
+  page_link: String
+  logo_link: String
+}
+
+type Query {
+  manufacturers: [Manufacturer!]!
+  manufacturer(id: ID!): Manufacturer
+}
+
+type Mutation {
+  createManufacturer(input: NewManufacturer!): Manufacturer!
+  updateManufacturer(input: UpdateManufacturer!): Manufacturer
+  deleteManufacturer(name: String!): Manufacturer
+}
+
+type Subscription {
+  manufacturerCreated: Manufacturer
+}

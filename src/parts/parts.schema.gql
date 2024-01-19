@@ -1,0 +1,38 @@
+type Part {
+  id: Int!
+  name: String!
+  model_name: String!
+  page_link: String!
+  catalogue_name: String!
+}
+
+input NewPart {
+  name: String!
+  model_name: String!
+  page_link: String!
+  catalogue_name: String!
+}
+
+input UpdatePart {
+  id: Int!
+  name: String
+  model_name: String
+  page_link: String
+  catalogue_name: String
+}
+
+type Query {
+  parts: [Part!]!
+  part(id: Int!): Part
+  partsByCatalogue(partCatalogueName: String!): [Part!]!
+}
+
+type Mutation {
+  createPart(input: NewPart!): Part!
+  updatePart(input: UpdatePart!): Part
+  deletePart(id: Int!): Part
+}
+
+type Subscription {
+  partCreated: Part
+}

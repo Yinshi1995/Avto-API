@@ -1,0 +1,37 @@
+type Model {
+  name: String!
+  img_link: String
+  page_link: String
+  year_start: Int
+  year_end: Int
+  manufacturer: String
+}
+
+input ModelCreateInput {
+  name: String!
+  img_link: String
+  page_link: String!
+  year_start: Int!
+  year_end: Int!
+  manufacturer: String
+}
+
+input ModelUpdateInput {
+  name: String
+  img_link: String
+  page_link: String
+  year_start: Int
+  year_end: Int
+  manufacturer: String
+}
+
+type Query {
+  models: [Model!]!
+  model(name: String!): Model
+}
+
+type Mutation {
+  createModel(input: ModelCreateInput!): Model!
+  updateModel(input: ModelUpdateInput!): Model
+  deleteModel(name: String!): Model
+}
